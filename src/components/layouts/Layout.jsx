@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import SmallSidebar from "./SmallSidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 
 export default function Layout() {
   const [showSideBar, setShowSideBar] = useState(true);
   const [showSmallSizeBar, setShowSmallSizeBar] = useState(false);
+  const user = useLoaderData();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,7 +25,7 @@ export default function Layout() {
           />
           {showSmallSizeBar && <SmallSidebar setSmall={setShowSmallSizeBar} />}
           <div className="py-3  min-h-screen">
-            <Outlet />
+            <Outlet context={user} />
           </div>
         </div>
       </div>

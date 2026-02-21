@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,46 +9,20 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setDataId,
-  setLimit,
-  setShowPopupTrue,
-  setSortData,
-} from "../../slices/adminSlice";
-import useGetData from "../../hooks/data/useGetData";
-import Loading from "../Loading";
 import Pagination from "../Pagination";
+import { useState } from "react";
+import DataDeletePopup from "./DataDeletePopup";
 
-export default function DataTable() {
-  const { refetchTrigger, search, farm, currentPage, limit, sortData } =
-    useSelector((state) => state.admin);
-
-  const [totalPage, setTotalPage] = useState(1);
-  const { loading, data, refetch, pages, count } = useGetData({
-    search,
-    farm,
-    currentPage,
-    limit,
-    sortData,
-  });
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    setTotalPage(pages);
-  }, [data, refetch, loading]);
-
-  useEffect(() => {
-    refetch();
-  }, [currentPage, limit, sortData]);
-
-  useEffect(() => {
-    refetch();
-  }, [refetchTrigger]);
-  return loading ? (
-    <Loading />
-  ) : (
+export default function DataTable({
+  sortData,
+  setSortData,
+  data,
+  limit,
+  setLimit,
+}) {
+  const [openDelete, setOpenDelete] = useState(false);
+  const [deleteItem, setDeleteItem] = useState(null);
+  return (
     <>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -58,8 +31,8 @@ export default function DataTable() {
               <TableCell
                 onClick={() =>
                   sortData === "clientAZ"
-                    ? dispatch(setSortData("clientZA"))
-                    : dispatch(setSortData("clientAZ"))
+                    ? setSortData("clientZA")
+                    : setSortData("clientAZ")
                 }
                 sx={{
                   width: "11.11%",
@@ -80,8 +53,8 @@ export default function DataTable() {
               <TableCell
                 onClick={() =>
                   sortData === "modelAZ"
-                    ? dispatch(setSortData("modelZA"))
-                    : dispatch(setSortData("modelAZ"))
+                    ? setSortData("modelZA")
+                    : setSortData("modelAZ")
                 }
                 sx={{
                   width: "11.11%",
@@ -102,8 +75,8 @@ export default function DataTable() {
               <TableCell
                 onClick={() =>
                   sortData === "serialAZ"
-                    ? dispatch(setSortData("serialZA"))
-                    : dispatch(setSortData("serialAZ"))
+                    ? setSortData("serialZA")
+                    : setSortData("serialAZ")
                 }
                 sx={{
                   width: "11.11%",
@@ -124,8 +97,8 @@ export default function DataTable() {
               <TableCell
                 onClick={() =>
                   sortData === "workerAZ"
-                    ? dispatch(setSortData("workerZA"))
-                    : dispatch(setSortData("workerAZ"))
+                    ? setSortData("workerZA")
+                    : setSortData("workerAZ")
                 }
                 sx={{
                   width: "11.11%",
@@ -146,8 +119,8 @@ export default function DataTable() {
               <TableCell
                 onClick={() =>
                   sortData === "macAZ"
-                    ? dispatch(setSortData("macZA"))
-                    : dispatch(setSortData("macAZ"))
+                    ? setSortData("macZA")
+                    : setSortData("macAZ")
                 }
                 sx={{
                   width: "11.11%",
@@ -169,8 +142,8 @@ export default function DataTable() {
               <TableCell
                 onClick={() =>
                   sortData === "actLocAZ"
-                    ? dispatch(setSortData("actLocZA"))
-                    : dispatch(setSortData("actLocAZ"))
+                    ? setSortData("actLocZA")
+                    : setSortData("actLocAZ")
                 }
                 sx={{
                   width: "11.11%",
@@ -191,8 +164,8 @@ export default function DataTable() {
               <TableCell
                 onClick={() =>
                   sortData === "currLocAZ"
-                    ? dispatch(setSortData("currLocZA"))
-                    : dispatch(setSortData("currLocAZ"))
+                    ? setSortData("currLocZA")
+                    : setSortData("currLocAZ")
                 }
                 sx={{
                   width: "11.11%",
@@ -213,8 +186,8 @@ export default function DataTable() {
               <TableCell
                 onClick={() =>
                   sortData === "nowRunAZ"
-                    ? dispatch(setSortData("nowRunZA"))
-                    : dispatch(setSortData("nowRunAZ"))
+                    ? setSortData("nowRunZA")
+                    : setSortData("nowRunAZ")
                 }
                 sx={{
                   width: "11.11%",
@@ -244,7 +217,7 @@ export default function DataTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((row, index) => (
+            {data?.datas?.map((row, index) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -325,8 +298,8 @@ export default function DataTable() {
                     </Link>
                     <button
                       onClick={() => {
-                        dispatch(setShowPopupTrue());
-                        dispatch(setDataId(row._id));
+                        setDeleteItem(row);
+                        setOpenDelete(true);
                       }}
                     >
                       <RiDeleteBin6Line />
@@ -338,12 +311,12 @@ export default function DataTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <p className="my-5 font-semibold text-lg">{`Total ${count} items found`}</p>
+      <p className="my-5 font-semibold text-lg">{`Total ${data?.totalDatas} items found`}</p>
       <div className=" bg-white w-fit rounded-md">
         <select
           className="rounded-md p-2"
           value={limit}
-          onChange={(e) => dispatch(setLimit(e.target.value))}
+          onChange={(e) => setLimit(e.target.value)}
         >
           <option value={20}>20</option>
           <option value={40}>40</option>
@@ -351,11 +324,19 @@ export default function DataTable() {
           <option value={80}>80</option>
         </select>
       </div>
-      {totalPage > 1 && (
+      {data?.numOfPages > 1 && (
         <div className="my-3 flex justify-end">
-          <Pagination totalPage={totalPage} setTotalPage={setTotalPage} />
+          <Pagination totalPage={data?.numOfPages} />
         </div>
       )}
+      <DataDeletePopup
+        open={openDelete}
+        handleClose={() => {
+          setOpenDelete(false);
+          setDeleteItem(null);
+        }}
+        item={deleteItem}
+      />
     </>
   );
 }

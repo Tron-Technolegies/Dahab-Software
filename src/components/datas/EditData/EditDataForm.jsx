@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import FormInput from "../../../FormInput";
-import { useParams } from "react-router-dom";
-import useGetSingleData from "../../../../hooks/adminDatas/useGetSingleData";
-import Loading from "../../../Loading";
-import useEditData from "../../../../hooks/adminDatas/useEditData";
-import { useSelector } from "react-redux";
-import useRestrictedEdit from "../../../../hooks/adminDatas/useRestrictedEdit";
-import FormSelect from "../../../FormSelect";
+import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
+import Loading from "../../Loading";
+import FormInput from "../../FormInput";
+import FormSelect from "../../FormSelect";
+import {
+  useEditData,
+  useGetSingleData,
+  useRestrictedEdit,
+} from "../../../hooks/data/useData";
 
 const locations = [
   "LIWA 1",
@@ -35,19 +36,19 @@ const locations = [
 
 export default function EditDataForm() {
   const { id } = useParams();
-  const { loading, data } = useGetSingleData({ id });
+  const { isError, isPending, error, data } = useGetSingleData({ id });
   const [clientName, setClientName] = useState("");
   const [modelName, setModelName] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
   const [macAddress, setMacAddress] = useState("");
-  const [actualLocation, setActualLocation] = useState("");
-  const [currentLocation, setCurrentLocation] = useState("");
+  const [actualLocation, setActualLocation] = useState("LIWA 1");
+  const [currentLocation, setCurrentLocation] = useState("LIWA 1");
   const [workerId, setWorkerId] = useState("");
   const [temporary, setTemporary] = useState("");
-  const { user } = useSelector((state) => state.user);
-  const { loading: editLoading, editData } = useEditData();
-  const { loading: restrictedLoading, EditRestrictedData } =
+  const user = useOutletContext();
+  const { isPending: restrictedLoading, mutateAsync: EditRestrictedData } =
     useRestrictedEdit();
+  const { isPending: editLoading, mutateAsync: editData } = useEditData();
 
   useEffect(() => {
     if (data) {
@@ -60,11 +61,11 @@ export default function EditDataForm() {
       setCurrentLocation(data.currentLocation);
       setWorkerId(data.workerId);
     }
-  }, [loading, data]);
+  }, [isPending, data]);
 
   const handleClick = async () => {
     if (user?.role === "superAdmin") {
-      editData({
+      const data = {
         id,
         clientName,
         modelName,
@@ -74,13 +75,17 @@ export default function EditDataForm() {
         serialNumber,
         macAddress,
         temporary,
-      });
+      };
+      await editData(data);
     } else {
-      EditRestrictedData({ id, currentLocation, temporary });
+      const data = { id, currentLocation, temporary };
+      await EditRestrictedData(data);
     }
   };
-  return loading ? (
+  return isPending ? (
     <Loading />
+  ) : isError ? (
+    <p>{error.message}</p>
   ) : (
     <div className="my-10">
       <FormInput
@@ -171,14 +176,13 @@ export default function EditDataForm() {
       />
       <div className="flex justify-end">
         <button
+          disabled={restrictedLoading || editLoading}
           onClick={handleClick}
           className="bg-homeBg p-2 px-4 rounded-lg text-white hover:bg-blue-500 nav-link"
         >
-          Save
+          {restrictedLoading || editLoading ? "saving..." : "save"}
         </button>
       </div>
-      {editLoading && <Loading />}
-      {restrictedLoading && <Loading />}
     </div>
   );
 }

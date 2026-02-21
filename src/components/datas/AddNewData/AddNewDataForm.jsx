@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import useAddNewData from "../../../hooks/data/useAddNewData";
 import FormInput from "../../FormInput";
-import Loading from "../../Loading";
 import FormSelect from "../../FormSelect";
+import { useAddDataMutation } from "../../../hooks/data/useData";
 
 const locations = [
   "LIWA 1",
@@ -34,11 +33,12 @@ export default function AddNewDataForm() {
   const [modelName, setModelName] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
   const [macAddress, setMacAddress] = useState("");
-  const [actualLocation, setActualLocation] = useState("");
-  const [currentLocation, setCurrentLocation] = useState("");
+  const [actualLocation, setActualLocation] = useState("LIWA 1");
+  const [currentLocation, setCurrentLocation] = useState("LIWA 1");
   const [temporary, setTemporary] = useState("");
   const [workerId, setWorkerId] = useState("");
-  const { loading, addNewData } = useAddNewData();
+
+  const { isPending, mutateAsync } = useAddDataMutation();
   return (
     <div className="my-10">
       <FormInput
@@ -122,8 +122,9 @@ export default function AddNewDataForm() {
       />
       <div className="flex justify-end">
         <button
-          onClick={() =>
-            addNewData({
+          disabled={isPending}
+          onClick={async () => {
+            const data = {
               clientName,
               macAddress,
               actualLocation,
@@ -132,14 +133,14 @@ export default function AddNewDataForm() {
               serialNumber,
               modelName,
               temporary,
-            })
-          }
+            };
+            await mutateAsync(data);
+          }}
           className="bg-homeBg p-2 px-4 rounded-lg text-white hover:bg-blue-500 nav-link"
         >
-          Save
+          {isPending ? "saving...." : "save"}
         </button>
       </div>
-      {loading && <Loading />}
     </div>
   );
 }

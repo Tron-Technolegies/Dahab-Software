@@ -14,7 +14,7 @@ const useLoginUser = () => {
       const data = res.data;
       if (data.msg === "successfully logged in") {
         toast.success("login success");
-        navigate("/dashboard");
+        navigate("/");
       } else {
         toast.error(data.msg);
       }

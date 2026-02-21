@@ -7,7 +7,7 @@ export default function EditDataHeader() {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl">Edit Data</h1>
         <Link
-          to={"/admin/data"}
+          to={"/data"}
           className="bg-homeBg p-2 px-4 rounded-lg text-white hover:bg-blue-500 nav-link"
         >
           Go Back
