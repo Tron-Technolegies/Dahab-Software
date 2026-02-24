@@ -4,7 +4,7 @@ import Loading from "../Loading";
 export default function RepairDelete({ function1, function2, loading }) {
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black flex justify-center items-center z-50">
-      <div className="bg-[#fff] px-5 p-3 rounded-lg flex flex-col gap-5 justify-center items-stretch max-w-96 h-48 opacity-100">
+      <div className="bg-white px-5 p-3 rounded-lg flex flex-col gap-5 justify-center items-stretch max-w-96 h-48 opacity-100">
         <h1 className="leading-6 font-semibold">
           Are you sure want to delete?.
         </h1>
