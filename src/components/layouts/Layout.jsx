@@ -13,7 +13,28 @@ export default function Layout() {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="bg-neutral-300 md:pt-2 md:px-2 text-black">
+    <div className="bg-white text-black">
+      <Header
+        toggle={showSideBar}
+        toggleFunction={setShowSideBar}
+        small={showSmallSizeBar}
+        setSmall={setShowSmallSizeBar}
+      />
+      <div className="flex gap-2">
+        {showSideBar && <Sidebar />}
+        <div className="w-full overflow-x-scroll">
+          {showSmallSizeBar && <SmallSidebar setSmall={setShowSmallSizeBar} />}
+          <div className="p-5 min-h-screen">
+            <Outlet context={user} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+{
+  /* <div className="bg-neutral-300 md:pt-2 md:px-2 text-black">
       <div className="flex gap-2">
         {showSideBar && <Sidebar />}
         <div className="w-full overflow-x-scroll">
@@ -29,6 +50,5 @@ export default function Layout() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div> */
 }

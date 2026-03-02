@@ -4,10 +4,7 @@ import NavigationLink from "./NavigationLink";
 
 export default function Sidebar() {
   return (
-    <div className="hidden xl:block w-64 flex-shrink-0 bg-homeBg h-screen overflow-auto rounded-2xl p-2 sticky top-0 animate-slideInLeft">
-      <div className="flex justify-center">
-        <img className="w-32 h-32 " src="/adminlogo.png"></img>
-      </div>
+    <div className="hidden xl:block w-72 shrink-0 bg-white shadow-md h-screen overflow-auto p-2 sticky top-0 animate-slideInLeft">
       <div className="mt-3 flex flex-col gap-1">
         {adminNavLinks.map((x) => (
           <NavigationLink
