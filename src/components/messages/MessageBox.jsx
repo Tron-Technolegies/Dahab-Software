@@ -25,7 +25,7 @@ export default function MessageBox({
   const { isPending, sendMessage } = useSendMessage();
   const [message, setMessage] = useState("");
   return (
-    <div className="bg-white rounded-lg  p-5 flex flex-col gap-2">
+    <div className="bg-[#eff6ff] rounded-lg  p-5 flex flex-col gap-2">
       <div className="border-b pb-1">
         <p className="">
           Issue No:{" "}

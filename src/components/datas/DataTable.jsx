@@ -216,7 +216,7 @@ export default function DataTable({
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ backgroundColor: "#eff6ff" }}>
             {data?.datas?.map((row, index) => (
               <TableRow
                 key={index}

@@ -108,7 +108,7 @@ export default function RemoveRepair() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ backgroundColor: "#eff6ff" }}>
             {miners?.map((x) => (
               <TableRow
                 key={x._id}

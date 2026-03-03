@@ -27,14 +27,15 @@ export default function Messages() {
     <p>{error.message}</p>
   ) : (
     <div>
-      <h4 className="text-xl font-semibold">All Messages</h4>
+      <h4 className="text-xl font-medium">Issue Messages</h4>
+      <p>Keep Track of all messages from clients</p>
       <div className="flex md:gap-2 gap-1 items-center my-5">
         <input
           type="text"
           placeholder="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="py-1 px-3 rounded-lg  border border-gray-300 text-gray-900 h-11"
+          className="py-1 px-3 rounded-lg  bg-gray-100 outline-none text-gray-900 h-11"
         />
       </div>
       <div className="grid grid-cols-1 gap-3">

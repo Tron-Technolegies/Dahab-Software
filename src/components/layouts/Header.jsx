@@ -13,14 +13,12 @@ export default function Header({ toggle, toggleFunction, small, setSmall }) {
   const [showLogout, setShowLogout] = useState(false);
   const { logout, loading } = useLogoutUser();
   return (
-    <div className="p-3 h-20 bg-homeBg md:rounded-2xl w-full text-white flex justify-between items-center sticky top-0 z-10">
-      <div
-        className="text-2xl hidden xl:block"
-        onClick={() => toggleFunction(!toggle)}
-      >
+    <div className="p-5 h-20 bg-homeBg w-full text-white flex justify-between items-center sticky top-0 z-10">
+      <div className="text-2xl hidden" onClick={() => toggleFunction(!toggle)}>
         <RxHamburgerMenu />
       </div>
-      <div className="text-lg md:text-2xl">DAHAB MINERS WEBSITE ADMIN</div>
+      <img className="w-24 object-cover " src="/adminlogo.webp"></img>
+      <div className="text-lg md:text-2xl hidden md:block"> Dashboard</div>
       <div className="xl:hidden flex gap-5 items-center">
         <NotificationTab />
         <div className="text-2xl" onClick={() => setSmall(!small)}>

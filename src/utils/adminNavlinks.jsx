@@ -1,18 +1,35 @@
-import { AiFillProduct } from "react-icons/ai";
-import { RiToolsFill } from "react-icons/ri";
+import { RiToolsFill, RiContractFill } from "react-icons/ri";
 import { MdOutlineInventory } from "react-icons/md";
 import { MdCategory } from "react-icons/md";
-import { ImBlog } from "react-icons/im";
+import { GoCpu } from "react-icons/go";
+import { GiCpu, GiMining } from "react-icons/gi";
 import { MdDashboardCustomize, MdCelebration } from "react-icons/md";
-import { SiBitcoinsv } from "react-icons/si";
-import { IoMail, IoNotifications } from "react-icons/io5";
+import { FaUsersLine } from "react-icons/fa6";
+import { IoIosWarning } from "react-icons/io";
+import { IoMail, IoNotifications, IoCloudOffline } from "react-icons/io5";
+import { AiOutlineFileProtect } from "react-icons/ai";
 export const adminNavLinks = [
   {
+    id: 1,
+    name: "Overview",
+    path: "/overview",
+    urlword: "overview",
+    icon: <MdDashboardCustomize />,
+  },
+  {
+    id: 2,
+    name: "Miner Models",
+    path: "/miner-models",
+    urlword: "miner-models",
+    icon: <GoCpu />,
+  },
+
+  {
     id: 3,
-    name: "Data",
+    name: "Miners",
     path: "/data",
     urlword: "data",
-    icon: <MdCategory />,
+    icon: <GiCpu />,
   },
   {
     id: 4,
@@ -28,7 +45,48 @@ export const adminNavLinks = [
     urlword: "inventory",
     icon: <MdOutlineInventory />,
   },
-
+  {
+    id: 6,
+    name: "Clients",
+    path: "/clients",
+    urlword: "clients",
+    icon: <FaUsersLine />,
+  },
+  {
+    id: 7,
+    name: "Issues",
+    path: "/issues",
+    urlword: "issues",
+    icon: <IoIosWarning />,
+  },
+  {
+    id: 10,
+    name: "Offline Miners",
+    path: "/offline-miners",
+    urlword: "offline-miners",
+    icon: <IoCloudOffline />,
+  },
+  {
+    id: 11,
+    name: "Invoices",
+    path: "/invoices",
+    urlword: "invoices",
+    icon: <RiContractFill />,
+  },
+  {
+    id: 12,
+    name: "Warranty",
+    path: "/warranty",
+    urlword: "warranty",
+    icon: <AiOutlineFileProtect />,
+  },
+  {
+    id: 13,
+    name: "Mining Farms",
+    path: "/mining-farms",
+    urlword: "mining-farms",
+    icon: <GiMining />,
+  },
   {
     id: 8,
     name: "Notifications",

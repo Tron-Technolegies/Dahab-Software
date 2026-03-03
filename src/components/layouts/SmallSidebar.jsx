@@ -14,9 +14,9 @@ export default function SmallSidebar({ setSmall }) {
   const [showLogout, setShowLogout] = useState(false);
   const { logout, loading } = useLogoutUser();
   return (
-    <div className="xl:hidden w-full bg-homeBg px-5 py-10 absolute right-0 left-0 z-20 animate-slideInTop">
+    <div className="xl:hidden w-full bg-white px-5 py-10 absolute right-0 left-0 z-20 animate-slideInTop">
       <div
-        className="flex justify-end text-white text-2xl"
+        className="flex justify-end text-black text-2xl"
         onClick={() => setSmall(false)}
       >
         <IoMdClose />
