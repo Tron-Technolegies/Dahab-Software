@@ -3,12 +3,15 @@ import { useGetRepairMiners } from "../../hooks/repair/useRepair";
 import AdminRepairHeader from "../../components/repair/AdminRepairHeader";
 import Loading from "../../components/Loading";
 import AdminRepairTable from "../../components/repair/AdminRepairTable";
+import PaginationComponent from "../../components/PaginationComponent";
 
 export default function Repair() {
   const [search, setSearch] = useState("");
   const [debounced, setDebounced] = useState("");
+  const [page, setPage] = useState(1);
   const { isError, isLoading, error, data } = useGetRepairMiners({
     search: debounced,
+    currentPage: page,
   });
 
   useEffect(() => {
@@ -26,7 +29,18 @@ export default function Repair() {
       ) : isError ? (
         <p>{error.message}</p>
       ) : (
-        <AdminRepairTable miners={data} />
+        <div className="flex flex-col gap-3">
+          <AdminRepairTable miners={data.miners} />
+          {data?.totalPages > 1 && (
+            <PaginationComponent
+              page={page}
+              totalPage={data?.totalPages}
+              pageChange={(e, v) => {
+                setPage(v);
+              }}
+            />
+          )}
+        </div>
       )}
     </div>
   );

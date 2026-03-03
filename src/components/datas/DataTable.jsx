@@ -9,7 +9,6 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { Link } from "react-router-dom";
-import Pagination from "../Pagination";
 import { useState } from "react";
 import DataDeletePopup from "./DataDeletePopup";
 
@@ -22,6 +21,7 @@ export default function DataTable({
 }) {
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteItem, setDeleteItem] = useState(null);
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -312,9 +312,9 @@ export default function DataTable({
         </Table>
       </TableContainer>
       <p className="my-5 font-semibold text-lg">{`Total ${data?.totalDatas} items found`}</p>
-      <div className=" bg-white w-fit rounded-md">
+      <div className=" bg-white w-fit rounded-md my-3">
         <select
-          className="rounded-md p-2"
+          className="rounded-md p-2 bg-gray-100"
           value={limit}
           onChange={(e) => setLimit(e.target.value)}
         >
@@ -324,11 +324,6 @@ export default function DataTable({
           <option value={80}>80</option>
         </select>
       </div>
-      {data?.numOfPages > 1 && (
-        <div className="my-3 flex justify-end">
-          <Pagination totalPage={data?.numOfPages} />
-        </div>
-      )}
       <DataDeletePopup
         open={openDelete}
         handleClose={() => {

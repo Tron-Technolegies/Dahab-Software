@@ -3,6 +3,7 @@ import DataPageHeader from "../../components/datas/DataPageHeader";
 import DataTable from "../../components/datas/DataTable";
 import { useGetDataQuery } from "../../hooks/data/useData";
 import Loading from "../../components/Loading";
+import PaginationComponent from "../../components/PaginationComponent";
 
 export default function Data() {
   const [sortData, setSortData] = useState("new");
@@ -42,13 +43,24 @@ export default function Data() {
       ) : isError ? (
         <p>something went wrong</p>
       ) : (
-        <DataTable
-          data={data}
-          setLimit={setLimit}
-          limit={limit}
-          sortData={sortData}
-          setSortData={setSortData}
-        />
+        <>
+          <DataTable
+            data={data}
+            setLimit={setLimit}
+            limit={limit}
+            sortData={sortData}
+            setSortData={setSortData}
+          />
+          {data?.numOfPages > 1 && (
+            <PaginationComponent
+              page={currentPage}
+              totalPage={data?.numOfPages}
+              pageChange={(e, v) => {
+                setCurrentPage(v);
+              }}
+            />
+          )}
+        </>
       )}
     </div>
   );
