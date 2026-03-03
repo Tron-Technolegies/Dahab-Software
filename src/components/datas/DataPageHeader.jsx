@@ -23,22 +23,28 @@ export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
       >
         <BulkUpload file={file} setFile={setFile} setOpen={setOpen} />
       </Backdrop>
-      <h4 className="md:text-2xl text-lg my-2">All Datas</h4>
-      <div className="flex flex-col gap-2 items-end justify-end">
-        <Link
-          to={"/data/new"}
-          className="bg-homeBg text-white px-5 py-2 rounded-lg hover:bg-homeBgGradient nav-link w-fit"
-        >
-          Add New Data
-        </Link>
-        <button
-          onClick={() => setOpen(true)}
-          className="bg-homeBg text-white px-5 py-2 rounded-lg hover:bg-homeBgGradient nav-link w-fit"
-        >
-          Add Bulk Data
-        </button>
+      <div className="flex md:flex-row flex-col justify-between gap-5 md:items-center border-b border-gray-200 pb-3">
+        <div>
+          <h4 className="md:text-2xl font-medium text-lg my-2">Miners</h4>
+          <p>Manage all mining equipment and monitor performance</p>
+        </div>
+        <div className="flex flex-col gap-2 items-end justify-end">
+          <Link
+            to={"/data/new"}
+            className="bg-homeBg text-white px-5 py-2 rounded-lg hover:bg-homeBgGradient nav-link w-fit"
+          >
+            Add New Data
+          </Link>
+          <button
+            onClick={() => setOpen(true)}
+            className="bg-homeBg text-white px-5 py-2 rounded-lg hover:bg-homeBgGradient nav-link w-fit"
+          >
+            Add Bulk Data
+          </button>
+        </div>
       </div>
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-5 px-5 py-7 bg-white my-5 rounded-lg">
+
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-5 px-5 py-7 my-5 rounded-lg bg-gray-100">
         <div className="flex flex-col gap-3">
           <label>Search Keyword:</label>
           <input

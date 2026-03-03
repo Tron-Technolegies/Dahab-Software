@@ -50,7 +50,7 @@ export default function NotificationContainer({ data, isLoading }) {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ backgroundColor: "#eff6ff" }}>
           {data?.notifications?.map((x) => (
             <TableRow
               key={x._id}

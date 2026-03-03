@@ -18,7 +18,7 @@ export default function Header({ toggle, toggleFunction, small, setSmall }) {
         <RxHamburgerMenu />
       </div>
       <img className="w-24 object-cover " src="/adminlogo.webp"></img>
-      <div className="text-lg md:text-2xl"> Dashboard</div>
+      <div className="text-lg md:text-2xl hidden md:block"> Dashboard</div>
       <div className="xl:hidden flex gap-5 items-center">
         <NotificationTab />
         <div className="text-2xl" onClick={() => setSmall(!small)}>

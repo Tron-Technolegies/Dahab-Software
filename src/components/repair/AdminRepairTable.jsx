@@ -115,7 +115,7 @@ export default function AdminRepairTable({ miners }) {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ backgroundColor: "#eff6ff" }}>
             {miners.map((x) => (
               <TableRow
                 key={x._id}

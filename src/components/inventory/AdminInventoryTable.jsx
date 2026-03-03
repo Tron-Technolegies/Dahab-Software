@@ -90,7 +90,7 @@ export default function AdminInventoryTable({ items }) {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ backgroundColor: "#eff6ff" }}>
           {items?.map((x) => (
             <TableRow
               key={x._id}
