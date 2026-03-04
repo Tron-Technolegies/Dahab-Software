@@ -109,6 +109,10 @@ body {
   background-color: #01081c;
   color: white;
 }
+
+button {
+  @apply p-2 rounded-md cursor-pointer duration-300 ease-in-out;
+}
 p,
 h1,
 h2,
