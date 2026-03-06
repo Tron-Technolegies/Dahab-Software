@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import {
-  useEditClient,
-  useGetSingleClient,
-} from "../../hooks/client/useClient";
+import { useAddClient } from "../../hooks/client/useClient";
 
 const style = {
   position: "absolute",
@@ -20,10 +17,9 @@ const style = {
   p: 4,
 };
 
-export default function EditClientModal({ open, handleClose, id }) {
+export default function AddClientModal({ open, handleClose }) {
   const [watchers, setWatchers] = useState([]);
-  const { isPending, mutateAsync } = useEditClient();
-  const { data: client } = useGetSingleClient({ id });
+  const { isPending, mutateAsync } = useAddClient();
 
   //functions for Watchers
   function addWatchers() {
@@ -38,21 +34,14 @@ export default function EditClientModal({ open, handleClose, id }) {
     setWatchers(watchers.filter((_, i) => i !== index));
   }
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     formData.append("watcher", JSON.stringify(watchers));
-    formData.append("userId", client?._id || id);
     const data = Object.fromEntries(formData);
     await mutateAsync(data);
     handleClose();
-  }
-
-  useEffect(() => {
-    if (client) {
-      setWatchers(client.watcherLinks);
-    }
-  }, [client]);
+  };
   return (
     <Modal
       open={open}
@@ -67,7 +56,7 @@ export default function EditClientModal({ open, handleClose, id }) {
           component="h2"
           sx={{ color: "black" }}
         >
-          Edit Client
+          Add New Client
         </Typography>
         <form
           className="flex flex-col gap-2 mt-5 text-black"
@@ -77,7 +66,6 @@ export default function EditClientModal({ open, handleClose, id }) {
           <input
             type="text"
             name="name"
-            defaultValue={client?.clientName}
             required
             className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:ring-blue-500"
           />
@@ -85,7 +73,6 @@ export default function EditClientModal({ open, handleClose, id }) {
           <input
             type="text"
             name="clientId"
-            defaultValue={client?.clientId}
             required
             className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:ring-blue-500"
           />
@@ -93,14 +80,19 @@ export default function EditClientModal({ open, handleClose, id }) {
           <input
             type="text"
             name="companyName"
-            defaultValue={client?.companyName}
             className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:ring-blue-500"
           />
           <label className="text-sm text-gray-700">Email</label>
           <input
             type="email"
             name="email"
-            defaultValue={client?.email}
+            required
+            className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:ring-blue-500"
+          />
+          <label className="text-sm text-gray-700">Password</label>
+          <input
+            type="password"
+            name="password"
             required
             className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:ring-blue-500"
           />
@@ -108,7 +100,6 @@ export default function EditClientModal({ open, handleClose, id }) {
           <input
             type="text"
             name="address"
-            defaultValue={client?.address?.street}
             required
             className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:ring-blue-500"
           />
@@ -156,7 +147,7 @@ export default function EditClientModal({ open, handleClose, id }) {
             disabled={isPending}
             className="bg-[#1C2340] hover:bg-[#141A32] text-white mt-4 py-2 rounded-md"
           >
-            {isPending ? "Updating..." : "Update"}
+            {isPending ? "Creating..." : "Create"}
           </button>
         </form>
       </Box>

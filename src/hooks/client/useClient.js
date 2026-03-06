@@ -111,4 +111,23 @@ export const useClearInternalNotes = () => {
   return { isPending, mutateAsync };
 };
 
-export const useDeleteClient = () => {};
+export const useDeleteClient = () => {
+  const queryClient = useQueryClient();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (data) => {
+      await api.delete(`/admin/client/`, data);
+    },
+    onSuccess: (_, data) => {
+      queryClient.invalidateQueries({ queryKey: ["client", data.user] });
+      toast.success("Cleared");
+    },
+    onError: (error) => {
+      toast.error(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.message,
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};

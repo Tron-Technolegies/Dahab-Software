@@ -10,12 +10,12 @@ import { GoCpu } from "react-icons/go";
 import { BsBuildingsFill } from "react-icons/bs";
 import EditClientModal from "./EditClientModal";
 import DeleteClientPopup from "./DeleteClientPopup";
+import { Link } from "react-router-dom";
 
-export default function ClientCard({ client, onViewDetails }) {
+export default function ClientCard({ client }) {
   const [expanded, setExpanded] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const { sendAgreement } = useAgreementActions();
 
   return (
     <div
@@ -97,15 +97,15 @@ export default function ClientCard({ client, onViewDetails }) {
 
           {/* Action Buttons */}
           <div className="flex md:flex-row flex-col gap-3 mt-4">
-            <button
+            <Link
+              to={`/clients/${client._id}`}
               onClick={(e) => {
                 e.stopPropagation();
-                onViewDetails(client);
               }}
-              className="w-full bg-[#787878] hover:bg-[#5f5f5f] text-white rounded-lg font-medium py-2 transition-colors"
+              className="w-full bg-[#787878] hover:bg-[#5f5f5f] text-white rounded-lg font-medium py-2 text-center transition-colors"
             >
               View Details
-            </button>
+            </Link>
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -128,7 +128,11 @@ export default function ClientCard({ client, onViewDetails }) {
         </div>
       )}
       {openEdit && (
-        <EditClientModal onClose={() => setOpenEdit(false)} client={client} />
+        <EditClientModal
+          open={openEdit}
+          handleClose={() => setOpenEdit(false)}
+          id={client?._id}
+        />
       )}
       <DeleteClientPopup
         open={openDelete}

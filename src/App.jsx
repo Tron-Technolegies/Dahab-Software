@@ -27,6 +27,7 @@ import {
   Repair,
   RepairSections,
   ResetPassword,
+  SingleClient,
   SingleInventory,
   Warranty,
 } from "./pages";
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
       { path: "messages", element: <Messages /> },
       { path: "miner-models", element: <MinerModels /> },
       { path: "clients", element: <Clients /> },
+      { path: "clients/:id", element: <SingleClient /> },
       { path: "issues", element: <Issues /> },
       { path: "offline-miners", element: <OfflineMiners /> },
       { path: "invoices", element: <Invoices /> },
