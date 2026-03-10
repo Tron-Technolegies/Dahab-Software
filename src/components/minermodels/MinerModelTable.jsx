@@ -52,7 +52,14 @@ export default function MinerModelTable() {
           className="p-2 bg-neutral-100 rounded-md outline-none shadow-md"
         />
       </div>
-      <TableContainer component={Paper} sx={{ marginTop: 3, marginBottom: 3 }}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          marginTop: 3,
+          marginBottom: 3,
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.12)",
+        }}
+      >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow sx={{ backgroundColor: "#F9FAFB" }}>

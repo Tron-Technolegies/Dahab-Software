@@ -24,7 +24,14 @@ export default function DataTable({
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          marginTop: 3,
+          marginBottom: 3,
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.12)",
+        }}
+      >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow sx={{ backgroundColor: "#F9FAFB" }}>

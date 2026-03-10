@@ -31,7 +31,7 @@ export default function AdminRepairHeader({ search, setSearch }) {
           placeholder="search..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="p-2 rounded-md w-fit outline-none bg-gray-100"
+          className="p-2 rounded-md w-fit outline-none bg-gray-100 shadow-md"
         />
       </div>
     </div>

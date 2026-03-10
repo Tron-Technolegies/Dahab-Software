@@ -5,7 +5,7 @@ import MinerModelTable from "../../components/minermodels/MinerModelTable";
 export default function MinerModels() {
   const [open, setOpen] = useState(false);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-5">
       <div className="flex md:flex-row flex-col gap-5 justify-between md:items-center pb-3 border-b border-gray-200">
         <div>
           <h4 className="md:text-2xl font-medium text-lg my-2">Miner Models</h4>
@@ -13,7 +13,7 @@ export default function MinerModels() {
         </div>
         <button
           onClick={() => setOpen(true)}
-          className="bg-homeBg text-white hover:bg-homeBgGradient"
+          className="bg-homeBg text-white hover:bg-homeBgGradient shadow-md shadow-[0 4px 12px rgba(0, 0, 0, 0.12);]"
         >
           + Add New
         </button>

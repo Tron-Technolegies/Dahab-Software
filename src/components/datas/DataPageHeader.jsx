@@ -44,7 +44,7 @@ export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-5 px-5 py-7 my-5 rounded-lg bg-gray-100">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-5 px-5 py-7 my-5 rounded-lg bg-gray-100 shadow-md">
         <div className="flex flex-col gap-3">
           <label>Search Keyword:</label>
           <input
