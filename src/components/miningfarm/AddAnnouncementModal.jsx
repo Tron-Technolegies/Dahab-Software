@@ -1,0 +1,109 @@
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { useState } from "react";
+import { useCreateFarmAnnouncement } from "../../hooks/miningfarm/useMiningFarm";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  color: "black",
+  bgcolor: "background.paper",
+  maxHeight: 550,
+  overflowY: "scroll",
+  boxShadow: 24,
+  p: 4,
+};
+
+export const AddAnnouncementModal = ({ open, handleClose, farm }) => {
+  const { isPending, mutateAsync } = useCreateFarmAnnouncement();
+  const [isOffline, setIsOffline] = useState(false);
+  const [startAt, setStartAt] = useState(false);
+  const [endAt, setEndAt] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const formdata = new FormData(e.target);
+    formdata.append("farmId", farm._id);
+    const data = Object.fromEntries(formdata);
+    data.isOffline = isOffline;
+    data.startAt = startAt;
+    data.endAt = endAt;
+    await mutateAsync(data);
+    e.target.reset();
+    setIsOffline(false);
+    setStartAt(null);
+    setEndAt(null);
+    handleClose();
+  }
+  return (
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Add an Announcement
+        </Typography>
+        <form className="mt-5 flex flex-col gap-2" onSubmit={handleSubmit}>
+          <label className="text-xs font-semibold">Farm</label>
+          <input
+            name="farmId"
+            required
+            disabled
+            value={farm?.farm}
+            className="p-2 rounded-md outline-none shadow-md bg-neutral-100"
+          ></input>
+          <label className="text-xs font-semibold">Message</label>
+          <textarea
+            required
+            name="message"
+            placeholder="Enter your message"
+            rows={3}
+            className="p-2 rounded-md outline-none shadow-md bg-neutral-100"
+          />
+          <div className="flex gap-2 items-center text-xs mt-1">
+            <input
+              type="checkbox"
+              checked={isOffline}
+              onChange={(e) => setIsOffline(e.target.checked)}
+            />
+            <label>Turn Miners Offline</label>
+          </div>
+          {isOffline && (
+            <>
+              <label className="text-xs font-semibold">Start Time</label>
+              <input
+                required
+                value={startAt}
+                onChange={(e) => setStartAt(e.target.value)}
+                type="datetime-local"
+                className="p-2 rounded-md outline-none shadow-md bg-neutral-100"
+              />
+              <label className="text-xs font-semibold">End Time</label>
+              <input
+                name="endAt"
+                value={endAt}
+                onChange={(e) => setEndAt(e.target.value)}
+                type="datetime-local"
+                className="p-2 rounded-md outline-none shadow-md bg-neutral-100"
+              />
+            </>
+          )}
+          <button
+            type="submit"
+            disabled={isPending}
+            className="p-2 bg-blue-900 text-white rounded-md mt-3"
+          >
+            {isPending ? "Sending...." : "Send Announcement"}
+          </button>
+        </form>
+      </Box>
+    </Modal>
+  );
+};
