@@ -3,12 +3,12 @@ import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export const useGetAllInventory = ({ search, type }) => {
+export const useGetAllInventory = ({ search, type, currentPage }) => {
   const { isLoading, isError, error, data } = useQuery({
-    queryKey: ["inventory", search, type],
+    queryKey: ["inventory", search, type, currentPage],
     queryFn: async () => {
       const { data } = await api.get(`/admin/inventory`, {
-        params: { search, type },
+        params: { search, type, currentPage },
       });
       return data;
     },

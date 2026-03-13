@@ -16,6 +16,7 @@ export { default as AddRepair } from "./repair/AddRepair";
 export { default as RemoveRepair } from "./repair/RemoveRepair";
 export { default as RepairSections } from "./repair/RepairSections";
 export { default as Clients } from "./clients/Clients";
+export { default as SingleClient } from "./clients/SingleClient";
 export { default as Invoices } from "./Invoices/Invoices";
 export { default as Issues } from "./Issues/Issues";
 export { default as MinerModels } from "./minermodels/MinerModels";

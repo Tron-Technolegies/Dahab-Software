@@ -11,7 +11,14 @@ import { Link, useOutletContext } from "react-router-dom";
 export default function AdminInventoryTable({ items }) {
   const user = useOutletContext();
   return (
-    <TableContainer component={Paper} sx={{ marginTop: 3 }}>
+    <TableContainer
+      component={Paper}
+      sx={{
+        marginTop: 3,
+        marginBottom: 3,
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.12)",
+      }}
+    >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ backgroundColor: "#F9FAFB" }}>

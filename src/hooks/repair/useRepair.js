@@ -3,11 +3,13 @@ import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-export const useGetRepairMiners = ({ search }) => {
+export const useGetRepairMiners = ({ search, currentPage }) => {
   const { isLoading, isError, error, data } = useQuery({
-    queryKey: ["repair-miners", search],
+    queryKey: ["repair-miners", search, currentPage],
     queryFn: async () => {
-      const { data } = await api.get(`/admin/repair`, { params: { search } });
+      const { data } = await api.get(`/admin/repair`, {
+        params: { search, currentPage },
+      });
       return data;
     },
   });
