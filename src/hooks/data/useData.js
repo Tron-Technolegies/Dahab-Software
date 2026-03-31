@@ -43,6 +43,27 @@ export const useAddDataMutation = () => {
   return { isPending, mutateAsync };
 };
 
+export const useAddDataV2Mutation = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (data) => {
+      await api.post(`/admin/data/addDataV2`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      toast.success("Success");
+      navigate("/data");
+    },
+    onError: (err) => {
+      toast.error(
+        err?.response?.data?.msg || err?.error || "something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};
+
 export const useDeleteData = () => {
   const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({
@@ -101,6 +122,28 @@ export const useEditData = () => {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async (data) => {
       await api.patch(`/admin/data/updateData/${data.id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["single-data"] });
+      toast.success("Edited");
+      navigate("/data");
+    },
+    onError: (err) => {
+      toast.error(
+        err?.response?.data?.msg || err?.error || "something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};
+
+export const useEditDataV2 = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (data) => {
+      await api.patch(`/admin/data/updateDataV2/${data.id}`, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["data"] });

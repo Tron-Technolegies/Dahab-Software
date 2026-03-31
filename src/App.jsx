@@ -5,11 +5,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layouts/Layout";
 import {
   AddData,
+  AddDataV2,
   AddInventory,
   AddRepair,
   Clients,
   Data,
   EditData,
+  EditDataV2,
   Error,
   ForgotPassowrd,
   Inventory,
@@ -52,7 +54,9 @@ const router = createBrowserRouter([
       { path: "overview", element: <Overview /> },
       { path: "data", element: <Data /> },
       { path: "data/new", element: <AddData /> },
+      { path: "data/newV2", element: <AddDataV2 /> },
       { path: "data/:id/edit", element: <EditData /> },
+      { path: "data/:id/editV2", element: <EditDataV2 /> },
       { path: "repair", element: <Repair /> },
       { path: "repair/new", element: <AddRepair /> },
       { path: "repair/remove", element: <RemoveRepair /> },

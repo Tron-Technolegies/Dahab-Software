@@ -12,9 +12,11 @@ import Paper from "@mui/material/Paper";
 import { useGetAllWarranties } from "../../hooks/warranty/useWarranty";
 import Loading from "../Loading";
 import PaginationComponent from "../PaginationComponent";
+import EditWarrantyPopup from "./EditWarrantyPopup";
 
 export default function WarrantyTable() {
   const [editItem, setEditItem] = useState(null);
+  const [openEdit, setOpenEdit] = useState(false);
   const [search, setSearch] = useState("");
   const [debounced, setDebounced] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -156,10 +158,10 @@ export default function WarrantyTable() {
                       scope="row"
                       sx={{ textAlign: "center" }}
                     >
-                      {item.miner?.model}
+                      {item.data?.model}
                       <br />
                       <span className="text-xs text-gray-500">
-                        SN: {item.miner?.serialNumber}
+                        SN: {item.data?.serialNumber}
                       </span>
                     </TableCell>
                     <TableCell
@@ -167,10 +169,10 @@ export default function WarrantyTable() {
                       scope="row"
                       sx={{ textAlign: "center" }}
                     >
-                      {item.user?.clientName}
+                      {item.client?.clientName}
                       <br />
                       <span className="text-xs text-gray-500">
-                        {item.user?.clientId}
+                        {item.client?.clientId}
                       </span>
                     </TableCell>
                     <TableCell
@@ -226,7 +228,10 @@ export default function WarrantyTable() {
                       <div className="flex justify-center">
                         <FiEdit
                           className="w-5 h-5 cursor-pointer"
-                          onClick={() => setEditItem(item)}
+                          onClick={() => {
+                            setEditItem(item);
+                            setOpenEdit(true);
+                          }}
                         />
                       </div>
                     </TableCell>
@@ -248,13 +253,11 @@ export default function WarrantyTable() {
           }}
         />
       )}
-      {/* UPDATE WARRANTY MODAL */}
-      {/* {editItem && (
-        <UpdateWarrantyModal
-          item={editItem}
-          onClose={() => setEditItem(null)}
-        />
-      )} */}
+      <EditWarrantyPopup
+        open={openEdit}
+        handleClose={() => setOpenEdit(false)}
+        item={editItem}
+      />
     </div>
   );
 }

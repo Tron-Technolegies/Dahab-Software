@@ -53,7 +53,7 @@ export default function MinerDetailsPopup({ open, handleClose, farm }) {
   const isSelected = (id) => selected.includes(id.toString());
 
   const { isError, isLoading, error, data } = useGetMinersInFarm({
-    farmId: farm?._id,
+    id: farm?._id,
   });
 
   const handleSelectAll = (e) => {

@@ -208,7 +208,7 @@ export default function SingleClient() {
                     <LuQrCode size={20} />
                     <div>
                       <div className="text-lg font-semibold">
-                        {miner.poolAddress}
+                        {miner.poolAddress || miner.pool}
                       </div>
                       <div className="text-xs text-gray-500">Pool Address</div>
                     </div>

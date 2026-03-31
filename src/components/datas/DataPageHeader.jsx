@@ -4,9 +4,11 @@ import Backdrop from "@mui/material/Backdrop";
 import BulkUpload from "./BulkUpload";
 import Loading from "../Loading";
 import useDownloadCSV from "../../hooks/data/useDownloadCSV";
+import AddSelectPopup from "./AddSelectPopup";
 
 export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
   const [open, setOpen] = useState(false);
+  const [openAddSelector, setOpenAddSelector] = useState(false);
   const [file, setFile] = useState(null);
   const { loading, downloadCSV } = useDownloadCSV();
 
@@ -29,12 +31,12 @@ export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
           <p>Manage all mining equipment and monitor performance</p>
         </div>
         <div className="flex flex-col gap-2 items-end justify-end">
-          <Link
-            to={"/data/new"}
+          <button
+            onClick={() => setOpenAddSelector(true)}
             className="bg-homeBg text-white px-5 py-2 rounded-lg hover:bg-homeBgGradient nav-link w-fit"
           >
             Add New Data
-          </Link>
+          </button>
           <button
             onClick={() => setOpen(true)}
             className="bg-homeBg text-white px-5 py-2 rounded-lg hover:bg-homeBgGradient nav-link w-fit"
@@ -100,6 +102,10 @@ export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
         Download CSV
       </button>
       {loading && <Loading />}
+      <AddSelectPopup
+        open={openAddSelector}
+        handleClose={() => setOpenAddSelector(false)}
+      />
     </div>
   );
 }

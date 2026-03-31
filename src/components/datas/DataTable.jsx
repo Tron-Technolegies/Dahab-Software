@@ -245,7 +245,7 @@ export default function DataTable({
                     maxWidth: "100px",
                   }}
                 >
-                  {row.modelName}
+                  {row.model || row.modelName}
                 </TableCell>
                 <TableCell
                   component="th"
@@ -296,11 +296,17 @@ export default function DataTable({
                   scope="row"
                   sx={{ width: "11.11%", textAlign: "center" }}
                 >
-                  {row.temporaryOwner}
+                  {row.temporaryOwner || row.clientName}
                 </TableCell>
                 <TableCell sx={{ width: "11.11%", textAlign: "center" }}>
-                  <div className="flex gap-5 justify-center text-xl text-[#ABABAB]">
-                    <Link to={`/data/${row._id}/edit`}>
+                  <div className="flex gap-5 justify-center items-center text-xl text-[#ABABAB]">
+                    <Link
+                      to={
+                        row.version === "2"
+                          ? `/data/${row._id}/editV2`
+                          : `/data/${row._id}/edit`
+                      }
+                    >
                       <FaRegEdit />
                     </Link>
                     <button
