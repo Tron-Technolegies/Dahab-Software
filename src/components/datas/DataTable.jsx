@@ -7,6 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
+import { GrView } from "react-icons/gr";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -299,7 +300,12 @@ export default function DataTable({
                   {row.temporaryOwner || row.clientName}
                 </TableCell>
                 <TableCell sx={{ width: "11.11%", textAlign: "center" }}>
-                  <div className="flex gap-5 justify-center items-center text-xl text-[#ABABAB]">
+                  <div className="flex gap-3 justify-center items-center text-xl text-[#ABABAB]">
+                    {row.version === "2" && (
+                      <Link to={`/data/${row._id}`}>
+                        <GrView />
+                      </Link>
+                    )}
                     <Link
                       to={
                         row.version === "2"

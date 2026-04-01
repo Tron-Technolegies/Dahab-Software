@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useGetClientDropdown } from "../../hooks/client/useClient";
 import { useGetAllMinerDropdowns } from "../../hooks/minermodels/useMinerModels";
@@ -14,11 +14,22 @@ export default function EditDataV2() {
     error,
     data,
   } = useGetSingleData({ id });
+  const [client, setClient] = useState("");
+  const [model, setModel] = useState("");
+  const [location, setLocation] = useState("");
   const { isLoading: clientLoading, data: clientData } = useGetClientDropdown();
   const { isLoading: minerLoading, data: modelsData } =
     useGetAllMinerDropdowns();
   const { isLoading: farmLoading, data: farmData } = useGetFarmDropdown();
   const { isPending, mutateAsync } = useEditDataV2();
+
+  useEffect(() => {
+    if (data) {
+      setClient(data.client);
+      setModel(data.modelId);
+      setLocation(data.actualLocationId);
+    }
+  }, [data]);
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -48,7 +59,8 @@ export default function EditDataV2() {
             className="p-2 outline-none bg-neutral-100 rounded-md"
             required
             name="client"
-            defaultValue={data.client}
+            value={client}
+            onChange={(e) => setClient(e.target.value)}
           >
             <option value={""}>Select Client</option>
             {!clientLoading &&
@@ -63,7 +75,8 @@ export default function EditDataV2() {
             className="p-2 outline-none bg-neutral-100 rounded-md"
             required
             name="model"
-            defaultValue={data.modelId}
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
           >
             <option value={""}>Select Miner</option>
             {!minerLoading &&
@@ -117,7 +130,8 @@ export default function EditDataV2() {
           <select
             required
             name="location"
-            defaultValue={data.actualLocationId}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             className="p-2 outline-none bg-neutral-100 rounded-md"
           >
             <option>Choose Location</option>
