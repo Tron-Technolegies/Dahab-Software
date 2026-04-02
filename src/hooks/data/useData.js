@@ -52,6 +52,9 @@ export const useAddDataV2Mutation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+      queryClient.invalidateQueries({ queryKey: ["farms"] });
+      queryClient.invalidateQueries({ queryKey: ["warranties"] });
       toast.success("Success");
       navigate("/data");
     },
@@ -73,6 +76,29 @@ export const useDeleteData = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["data"] });
       toast.success("Deleted");
+    },
+    onError: (err) => {
+      toast.error(
+        err?.response?.data?.msg || err?.error || "something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};
+export const useDeleteDataV2 = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (id) => {
+      await api.delete(`/admin/data/deleteDataV2/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+      queryClient.invalidateQueries({ queryKey: ["farms"] });
+      queryClient.invalidateQueries({ queryKey: ["warranties"] });
+      toast.success("Deleted");
+      navigate("/data");
     },
     onError: (err) => {
       toast.error(

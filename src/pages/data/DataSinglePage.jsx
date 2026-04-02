@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useGetSingleData } from "../../hooks/data/useData";
 import Loading from "../../components/Loading";
@@ -14,6 +14,7 @@ import { LuQrCode } from "react-icons/lu";
 import { CiCalendar, CiCalendarDate } from "react-icons/ci";
 import { diffInMonths, monthsFromNow } from "../../utils/monthCalculation";
 import { MdHistory } from "react-icons/md";
+import DataDeletePopup from "../../components/datas/DataDeletePopup";
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -31,6 +32,8 @@ const getStatusColor = (status) => {
 export default function DataSinglePage() {
   const { id } = useParams();
   const { isError, isPending, data, error } = useGetSingleData({ id });
+  const [openDelete, setOpenDelete] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -52,7 +55,7 @@ export default function DataSinglePage() {
 
         <Link
           to={"/data"}
-          className="bg-[#3893D0] w-fit hover:bg-[#2c7cb5] text-white rounded-xl px-4 py-1 transition-all"
+          className="bg-homeBg w-fit hover:bg-homeBgGradient text-white rounded-md px-4 py-1 transition-all"
         >
           Go Back
         </Link>
@@ -192,7 +195,7 @@ export default function DataSinglePage() {
             Edit
           </Link>
           <button
-            // onClick={() => setOpenDelete(true)}
+            onClick={() => setOpenDelete(true)}
             className="bg-red-700 hover:bg-red-900 text-white w-full"
           >
             Delete
@@ -205,6 +208,11 @@ export default function DataSinglePage() {
           </button>
         </div>
       </div>
+      <DataDeletePopup
+        open={openDelete}
+        handleClose={() => setOpenDelete(false)}
+        item={data}
+      />
     </div>
   );
 }

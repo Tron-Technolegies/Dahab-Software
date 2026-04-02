@@ -4,10 +4,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useDeleteData } from "../../hooks/data/useData";
+import { useDeleteData, useDeleteDataV2 } from "../../hooks/data/useData";
 
 export default function DataDeletePopup({ open, handleClose, item }) {
   const { isPending, mutateAsync } = useDeleteData();
+  const { isPending: isPendingV2, mutateAsync: mutateAsyncV2 } =
+    useDeleteDataV2();
   return (
     <Dialog
       open={open}
@@ -18,7 +20,7 @@ export default function DataDeletePopup({ open, handleClose, item }) {
       <DialogTitle id="alert-dialog-title">{"Delete this Data ?"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {`Are you sure you want to delete this data for the model ${item?.modelName} with serial number ${item?.serialNumber} of client ${item?.clientName}?`}
+          {`Are you sure you want to delete this data for the model ${item?.modelName || item?.model} with serial number ${item?.serialNumber} of client ${item?.clientName}?`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -29,15 +31,19 @@ export default function DataDeletePopup({ open, handleClose, item }) {
           No
         </Button>
         <Button
-          disabled={isPending}
+          disabled={isPending || isPendingV2}
           onClick={async () => {
-            await mutateAsync(item?._id);
+            if (item?.version === "2") {
+              await mutateAsyncV2(item?._id);
+            } else {
+              await mutateAsync(item?._id);
+            }
             handleClose();
           }}
           autoFocus
           sx={{ backgroundColor: "red", color: "white" }}
         >
-          {isPending ? "Deleting..." : "  Yes, Proceed"}
+          {isPending || isPendingV2 ? "Deleting..." : "  Yes, Proceed"}
         </Button>
       </DialogActions>
     </Dialog>
