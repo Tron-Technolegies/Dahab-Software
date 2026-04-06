@@ -89,6 +89,10 @@ export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
               "MBZ HYDRO 1",
               "ALAIN HYDRO 1",
               "ALAIN HYDRO 2",
+              "RIYAD CITY 1",
+              "RIYAD CITY 2",
+              "WAQAN 1",
+              "WAQAN 2",
             ].map((x, i) => (
               <option key={i}>{x}</option>
             ))}

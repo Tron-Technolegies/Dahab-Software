@@ -22,6 +22,19 @@ export const useGetDataQuery = ({
   return { isError, isLoading, data, error };
 };
 
+export const useGetDataDropdown = ({ search }) => {
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["data-dropdown", search],
+    queryFn: async () => {
+      const { data } = await api.get(`/admin/data/dropdown`, {
+        params: { search },
+      });
+      return data;
+    },
+  });
+  return { isError, isLoading, data, error };
+};
+
 export const useAddDataMutation = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();

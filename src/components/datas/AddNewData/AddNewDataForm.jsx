@@ -26,6 +26,10 @@ const locations = [
   "MBZ HYDRO 1",
   "ALAIN HYDRO 1",
   "ALAIN HYDRO 2",
+  "RIYAD CITY 1",
+  "RIYAD CITY 2",
+  "WAQAN 1",
+  "WAQAN 2",
 ];
 
 export default function AddNewDataForm() {
