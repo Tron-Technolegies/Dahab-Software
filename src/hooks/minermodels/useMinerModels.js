@@ -15,6 +15,17 @@ export const useGetAllMinerModels = ({ search, currentPage }) => {
   return { isLoading, isError, data };
 };
 
+export const useGetAllMinerDropdowns = () => {
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["miner-models-dropdown"],
+    queryFn: async () => {
+      const { data } = await api.get(`/admin/miner-model/dropdown`);
+      return data;
+    },
+  });
+  return { isLoading, isError, data };
+};
+
 export const useEditMinerModel = () => {
   const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({

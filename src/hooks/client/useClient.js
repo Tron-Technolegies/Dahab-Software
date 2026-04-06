@@ -15,6 +15,17 @@ export const useGetAllClients = ({ currentPage, query, status }) => {
   return { isLoading, isError, error, data };
 };
 
+export const useGetClientDropdown = () => {
+  const { isLoading, isError, error, data } = useQuery({
+    queryKey: ["client-dropdown"],
+    queryFn: async () => {
+      const { data } = await api.get(`/admin/client/dropdown`);
+      return data;
+    },
+  });
+  return { isLoading, isError, error, data };
+};
+
 export const useAddClient = () => {
   const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({

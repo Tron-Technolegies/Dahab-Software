@@ -24,3 +24,6 @@ export { default as MiningFarms } from "./miningFarms/MiningFarms";
 export { default as OfflineMiners } from "./offlineminers/OfflineMiners";
 export { default as Overview } from "./overview/Overview";
 export { default as Warranty } from "./warranty/Warranty";
+export { default as AddDataV2 } from "./data/AddDataV2";
+export { default as EditDataV2 } from "./data/EditDataV2";
+export { default as DataSinglePage } from "./data/DataSinglePage";

@@ -13,6 +13,17 @@ export const useGetAllMiningFarms = () => {
   return { isError, isLoading, error, data };
 };
 
+export const useGetFarmDropdown = () => {
+  const { isLoading, data, isError, error } = useQuery({
+    queryKey: ["farms-dropdown"],
+    queryFn: async () => {
+      const { data } = await api.get(`/admin/mining-farm/dropdown`);
+      return data;
+    },
+  });
+  return { isError, isLoading, error, data };
+};
+
 export const useGetMinersInFarm = ({ id }) => {
   const { isLoading, data, isError, error } = useQuery({
     queryKey: ["farm-miners", id],

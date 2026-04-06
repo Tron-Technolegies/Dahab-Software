@@ -210,7 +210,9 @@ input:disabled {
     transform: rotate(360deg);
   }
 }
-
+input {
+  outline: none;
+}
 .loading {
   width: 3rem;
   height: 3rem;

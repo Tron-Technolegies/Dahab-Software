@@ -22,6 +22,19 @@ export const useGetDataQuery = ({
   return { isError, isLoading, data, error };
 };
 
+export const useGetDataDropdown = ({ search }) => {
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["data-dropdown", search],
+    queryFn: async () => {
+      const { data } = await api.get(`/admin/data/dropdown`, {
+        params: { search },
+      });
+      return data;
+    },
+  });
+  return { isError, isLoading, data, error };
+};
+
 export const useAddDataMutation = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -43,6 +56,30 @@ export const useAddDataMutation = () => {
   return { isPending, mutateAsync };
 };
 
+export const useAddDataV2Mutation = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (data) => {
+      await api.post(`/admin/data/addDataV2`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+      queryClient.invalidateQueries({ queryKey: ["farms"] });
+      queryClient.invalidateQueries({ queryKey: ["warranties"] });
+      toast.success("Success");
+      navigate("/data");
+    },
+    onError: (err) => {
+      toast.error(
+        err?.response?.data?.msg || err?.error || "something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};
+
 export const useDeleteData = () => {
   const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({
@@ -52,6 +89,29 @@ export const useDeleteData = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["data"] });
       toast.success("Deleted");
+    },
+    onError: (err) => {
+      toast.error(
+        err?.response?.data?.msg || err?.error || "something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};
+export const useDeleteDataV2 = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (id) => {
+      await api.delete(`/admin/data/deleteDataV2/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+      queryClient.invalidateQueries({ queryKey: ["farms"] });
+      queryClient.invalidateQueries({ queryKey: ["warranties"] });
+      toast.success("Deleted");
+      navigate("/data");
     },
     onError: (err) => {
       toast.error(
@@ -101,6 +161,28 @@ export const useEditData = () => {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async (data) => {
       await api.patch(`/admin/data/updateData/${data.id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["single-data"] });
+      toast.success("Edited");
+      navigate("/data");
+    },
+    onError: (err) => {
+      toast.error(
+        err?.response?.data?.msg || err?.error || "something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};
+
+export const useEditDataV2 = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (data) => {
+      await api.patch(`/admin/data/updateDataV2/${data.id}`, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["data"] });
