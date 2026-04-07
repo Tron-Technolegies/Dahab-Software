@@ -6,7 +6,10 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useGetClientDropdown } from "../../hooks/client/useClient";
 import { useGetDataDropdown } from "../../hooks/data/useData";
-import { useGetIssueType } from "../../hooks/issues/useIssueTypes";
+import {
+  useGetIssueType,
+  useReportIssue,
+} from "../../hooks/issues/useIssueTypes";
 
 const style = {
   position: "absolute",
@@ -30,7 +33,9 @@ export default function ReportIssue1({ open, handleClose }) {
   const { isLoading: minerLoading, data: miners } = useGetDataDropdown({
     search: selectedClientId,
   });
+  const [checked, setChecked] = useState(false);
   const { isLoading: issueLoading, data: issueTypes } = useGetIssueType();
+  const { isPending, mutateAsync } = useReportIssue();
 
   useEffect(() => {
     if (worker && miners) {
@@ -57,7 +62,24 @@ export default function ReportIssue1({ open, handleClose }) {
         <p className="text-sm text-gray-500 mb-5">
           Report an issue for any existing miner
         </p>
-        <form className="flex flex-col gap-2 text-black">
+        <form
+          className="flex flex-col gap-2 text-black"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const formdata = new FormData(e.target);
+            const data = Object.fromEntries(formdata);
+            data.client = selectedClientId;
+            data.miner = model._id;
+            data.workerId = worker;
+            data.status = checked ? "offline" : "online";
+            await mutateAsync(data);
+            e.target.reset();
+            setSelectedClientId("");
+            setWorker("");
+            setModel("");
+            handleClose();
+          }}
+        >
           <label className="text-xs font-medium">Client</label>
           {!clientsLoading && clientsData.length && (
             <Autocomplete
@@ -108,10 +130,17 @@ export default function ReportIssue1({ open, handleClose }) {
           />
           <div className="flex gap-2 items-center">
             <label className="text-xs font-medium">Turn Offline</label>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+            />
           </div>
-          <button className="bg-homeBg hover:bg-homeBgGradient text-white">
-            Report Issue
+          <button
+            disabled={isPending}
+            className="bg-homeBg hover:bg-homeBgGradient text-white"
+          >
+            {isPending ? "Reporting..." : "Report"}
           </button>
         </form>
       </Box>
