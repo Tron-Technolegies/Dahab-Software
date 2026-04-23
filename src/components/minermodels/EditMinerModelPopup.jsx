@@ -84,7 +84,7 @@ export default function EditMinerModelPopup({ open, handleClose, id }) {
             placeholder=""
             required
           />
-          <label className="text-xs font-medium">Power (KW)</label>
+          <label className="text-xs font-medium">Power (Watt)</label>
           <input
             type="number"
             name="power"
