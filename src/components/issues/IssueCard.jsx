@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { MdHistory } from "react-icons/md";
 import { CiClock2 } from "react-icons/ci";
 import { LuCpu } from "react-icons/lu";
 import { BiMessageDetail } from "react-icons/bi";
+import { useUpdateIssueStatus } from "../../hooks/issues/useIssueTypes";
 
 export default function IssueCard({ issue }) {
+  const [status, setStatus] = useState("");
+  const { isPending, mutateAsync } = useUpdateIssueStatus();
+
+  useEffect(() => {
+    if (issue) {
+      setStatus(issue.status);
+    }
+  }, [issue]);
   return (
     <div className="bg-[#F9F9F9] border border-[#E6E6E6] rounded-2xl px-7 py-7 flex flex-col gap-2 shadow-sm">
       <p className="font-bold text-sm">ID: XXX-{issue._id.slice(15)}</p>
@@ -117,8 +126,8 @@ export default function IssueCard({ issue }) {
             </button>
             <div className="flex items-center gap-2">
               <select
-                // value={status}
-                // onChange={(e) => setStatus(e.target.value)}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
                 className="px-4 py-1.5 text-sm rounded-lg border border-gray-300 text-gray-700"
               >
                 <option value="Pending">Pending</option>
@@ -128,11 +137,17 @@ export default function IssueCard({ issue }) {
               </select>
 
               <button
-                // onClick={handleSave}
+                disabled={isPending}
+                onClick={async () => {
+                  const data = {
+                    status,
+                    id: issue._id,
+                  };
+                  await mutateAsync(data);
+                }}
                 className="px-4 py-1.5 text-sm cursor-pointer rounded-lg bg-blue-600 text-white"
               >
-                {/* {saving ? "Saving..." : "Save"} */}
-                Save
+                {isPending ? "Saving.." : "Save"}
               </button>
             </div>
           </div>

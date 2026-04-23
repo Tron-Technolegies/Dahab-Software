@@ -88,3 +88,24 @@ export const useReportIssue = () => {
   });
   return { isPending, mutateAsync };
 };
+
+export const useUpdateIssueStatus = () => {
+  const queryClient = useQueryClient();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (data) => {
+      await api.patch(`/admin/issue/update-status/${data.id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["issues"] });
+      toast.success("Updated");
+    },
+    onError: (error) => {
+      toast.error(
+        error.response.data.error ||
+          error.response.data.message ||
+          "Something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};
