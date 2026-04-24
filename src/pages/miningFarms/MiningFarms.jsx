@@ -96,7 +96,7 @@ export default function MiningFarms() {
                     {item.farmStatus}
                   </p>
                 </div>
-                <p className="italic font-sans font-semibold">{`${item.current}/${item.capacity} KW`}</p>
+                <p className="italic font-sans font-semibold">{`${item.current / 1000}/${item.capacity / 1000} KW`}</p>
                 {expanded && selected._id === item._id && (
                   <div className="p-2 mt-3 duration-300 ease-in-out transition-all">
                     {item.farmInfo && (
@@ -157,14 +157,18 @@ export default function MiningFarms() {
                       <div className="flex gap-2 items-center w-full justify-center">
                         <ImPower size={28} />
                         <p className="flex flex-col">
-                          <span className="font-bold">{item.capacity} KW</span>
+                          <span className="font-bold">
+                            {item.capacity / 1000} KW
+                          </span>
                           <span className="text-xs">capacity</span>
                         </p>
                       </div>
                       <div className="flex gap-2 items-center w-full justify-center">
                         <ImPowerCord size={28} />
                         <p className="flex flex-col">
-                          <span className="font-bold">{item.current} KW</span>
+                          <span className="font-bold">
+                            {item.current / 1000} KW
+                          </span>
                           <span className="text-xs">current</span>
                         </p>
                       </div>
