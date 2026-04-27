@@ -5,6 +5,7 @@ import BulkUpload from "./BulkUpload";
 import Loading from "../Loading";
 import useDownloadCSV from "../../hooks/data/useDownloadCSV";
 import AddSelectPopup from "./AddSelectPopup";
+import BulkUploadDataV2 from "./BulkUploadDataV2";
 
 export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
   const [open, setOpen] = useState(false);
@@ -14,7 +15,7 @@ export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
 
   return (
     <div>
-      <Backdrop
+      {/* <Backdrop
         sx={(theme) => ({
           color: "#fff",
           zIndex: theme.zIndex.drawer + 1,
@@ -24,7 +25,8 @@ export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
         onClick={() => setOpen(false)}
       >
         <BulkUpload file={file} setFile={setFile} setOpen={setOpen} />
-      </Backdrop>
+      </Backdrop> */}
+      <BulkUploadDataV2 open={open} handleClose={() => setOpen(false)} />
       <div className="flex md:flex-row flex-col justify-between gap-5 md:items-center border-b border-gray-200 pb-3">
         <div>
           <h4 className="md:text-2xl font-medium text-lg my-2">Miners</h4>

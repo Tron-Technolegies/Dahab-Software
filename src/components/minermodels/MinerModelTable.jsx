@@ -85,7 +85,7 @@ export default function MinerModelTable() {
                   fontWeight: "bold",
                 }}
               >
-                Power (KW)
+                Power (Watts)
               </TableCell>
               <TableCell
                 sx={{
@@ -93,7 +93,7 @@ export default function MinerModelTable() {
                   fontWeight: "bold",
                 }}
               >
-                Hash Rate (TH/s)
+                Hash Rate
               </TableCell>
               <TableCell
                 sx={{
@@ -164,7 +164,7 @@ export default function MinerModelTable() {
                     scope="row"
                     sx={{ textAlign: "center" }}
                   >
-                    {item.hashRate}
+                    {item.hashRate} {item.hashUnit}
                   </TableCell>
                   <TableCell
                     component="th"
