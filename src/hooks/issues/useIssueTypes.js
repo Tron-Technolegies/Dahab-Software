@@ -109,3 +109,35 @@ export const useUpdateIssueStatus = () => {
   });
   return { isPending, mutateAsync };
 };
+
+export const useGetIssueMessages = ({ issueId }) => {
+  const { isLoading, isError, error, data } = useQuery({
+    queryKey: ["issue-messages", issueId],
+    queryFn: async () => {
+      const { data } = await api.get(`/admin/issue/messages/${issueId}`, {});
+      return data;
+    },
+  });
+  return { isLoading, isError, error, data };
+};
+
+export const useSendIssueResponse = () => {
+  const queryClient = useQueryClient();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (data) => {
+      await api.post(`/admin/issue/send-response`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["issue-messages"] });
+      toast.success("Updated");
+    },
+    onError: (error) => {
+      toast.error(
+        error.response.data.error ||
+          error.response.data.message ||
+          "Something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};

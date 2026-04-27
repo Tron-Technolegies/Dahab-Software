@@ -5,10 +5,16 @@ import { CiClock2 } from "react-icons/ci";
 import { LuCpu } from "react-icons/lu";
 import { BiMessageDetail } from "react-icons/bi";
 import { useUpdateIssueStatus } from "../../hooks/issues/useIssueTypes";
+import StatusHistoryModal from "./StatusHistoryModal";
+import ChatHistoryModal from "./ChatHistoryModal";
+import RespondIssueModal from "./RespondIssueModal";
 
 export default function IssueCard({ issue }) {
   const [status, setStatus] = useState("");
   const { isPending, mutateAsync } = useUpdateIssueStatus();
+  const [openStatusHistory, setOpenStatusHistory] = useState(false);
+  const [openChatHistory, setOpenChatHistory] = useState(false);
+  const [openResponse, setOpenResponse] = useState(false);
 
   useEffect(() => {
     if (issue) {
@@ -17,6 +23,9 @@ export default function IssueCard({ issue }) {
   }, [issue]);
   return (
     <div className="bg-[#F9F9F9] border border-[#E6E6E6] rounded-2xl px-7 py-7 flex flex-col gap-2 shadow-sm">
+      {issue.owner === "Intermine" && (
+        <p className="bg-homeBg w-fit p-1 text-white px-3 ">INTERMINE</p>
+      )}
       <p className="font-bold text-sm">ID: XXX-{issue._id.slice(15)}</p>
       {/* Top: title + status */}
       <div className="flex md:flex-row flex-col-reverse gap-2 md:gap-0 justify-between items-start">
@@ -48,7 +57,7 @@ export default function IssueCard({ issue }) {
             <MdHistory
               size={24}
               className="cursor-pointer"
-              //   onClick={() => setOpenStatusHistory(true)}
+              onClick={() => setOpenStatusHistory(true)}
             />
           </div>
           Last update: {new Date(issue.updatedAt).toLocaleString()}
@@ -118,12 +127,15 @@ export default function IssueCard({ issue }) {
         {/* Left controls */}
         <div className="flex md:flex-row flex-col justify-between md:items-center gap-3 w-full">
           <div className="flex md:flex-row flex-col gap-3 md:items-center">
-            <button
-              //   onClick={onRespond}
-              className="px-4 py-1.5 text-sm rounded-lg cursor-pointer border border-gray-300 text-gray-700"
-            >
-              Send Response
-            </button>
+            {issue.owner === "Intermine" && (
+              <button
+                onClick={() => setOpenResponse(true)}
+                className="px-4 py-1.5 text-sm rounded-lg cursor-pointer border border-gray-300 text-gray-700"
+              >
+                Send Response
+              </button>
+            )}
+
             <div className="flex items-center gap-2">
               <select
                 value={status}
@@ -153,18 +165,35 @@ export default function IssueCard({ issue }) {
           </div>
 
           {/* Right side buttons */}
-          <div className="flex md:flex-row flex-col md:items-center  gap-4">
-            {/* Chat History */}
-            <button
-              //   onClick={() => onChatOpen(issue._id)}
-              className="bg-gray-200 cursor-pointer w-full md:w-fit px-4 py-2 rounded-full flex items-center gap-1 text-gray-700 justify-center"
-            >
-              <BiMessageDetail />
-              Messages
-            </button>
-          </div>
+          {issue.owner === "Intermine" && (
+            <div className="flex md:flex-row flex-col md:items-center  gap-4">
+              {/* Chat History */}
+              <button
+                onClick={() => setOpenChatHistory(true)}
+                className="bg-gray-200 cursor-pointer w-full md:w-fit px-4 py-2 rounded-full flex items-center gap-1 text-gray-700 justify-center"
+              >
+                <BiMessageDetail />
+                Messages
+              </button>
+            </div>
+          )}
         </div>
       </div>
+      <StatusHistoryModal
+        open={openStatusHistory}
+        handleClose={() => setOpenStatusHistory(false)}
+        statusHistory={issue?.statusHistory}
+      />
+      <ChatHistoryModal
+        open={openChatHistory}
+        handleClose={() => setOpenChatHistory(false)}
+        issueId={issue?._id}
+      />
+      <RespondIssueModal
+        open={openResponse}
+        handleClose={() => setOpenResponse(false)}
+        issue={issue}
+      />
     </div>
   );
 }
