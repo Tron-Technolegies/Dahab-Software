@@ -109,7 +109,9 @@ export default function DataSinglePage() {
           <div className="flex items-center gap-2">
             <BiChip size={20} />
             <div>
-              <div className="text-lg font-semibold">{data.hashRate}</div>
+              <div className="text-lg font-semibold">
+                {data.hashRate} {data.hashUnit}
+              </div>
               <div className="text-xs text-gray-500">Hash Rate</div>
             </div>
           </div>
