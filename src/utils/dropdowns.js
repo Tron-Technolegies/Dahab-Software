@@ -213,6 +213,7 @@ export const algorithm = [
   "Handshake",
   "KHeavyHash",
   "KangarooTwelve",
+  "Kadena",
   "Keccak",
   "Keccak-C",
   "Keccak-D",
