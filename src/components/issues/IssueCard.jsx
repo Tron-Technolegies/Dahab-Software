@@ -31,7 +31,7 @@ export default function IssueCard({ issue }) {
       <div className="flex md:flex-row flex-col-reverse gap-2 md:gap-0 justify-between items-start">
         <div className="flex flex-col gap-2 w-full">
           {issue.type === "repair" ? (
-            <h3 className=" font-semibold text-black">{issue.issueType}</h3>
+            <h3 className=" font-semibold text-black">{issue.issueName}</h3>
           ) : (
             <p className="font-semibold text-blue-700">
               Request for Pool Change

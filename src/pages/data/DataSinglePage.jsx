@@ -15,6 +15,9 @@ import { CiCalendar, CiCalendarDate } from "react-icons/ci";
 import { diffInMonths, monthsFromNow } from "../../utils/monthCalculation";
 import { MdHistory } from "react-icons/md";
 import DataDeletePopup from "../../components/datas/DataDeletePopup";
+import ReportIssue2 from "../../components/issues/ReportIssue2";
+import ChatHistoryModal from "../../components/issues/ChatHistoryModal";
+import MinersHistoryModal from "../../components/datas/MinersHistoryModal";
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -33,6 +36,8 @@ export default function DataSinglePage() {
   const { id } = useParams();
   const { isError, isPending, data, error } = useGetSingleData({ id });
   const [openDelete, setOpenDelete] = useState(false);
+  const [openReportIssue, setOpenReportIssue] = useState(false);
+  const [openHistory, setOpenHistory] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -178,9 +183,9 @@ export default function DataSinglePage() {
           </div>
 
           <button
-            // onClick={() => {
-            //   setShowHistory(true);
-            // }}
+            onClick={() => {
+              setOpenHistory(true);
+            }}
             className="bg-[#3893D0] text-white px-4 py-2 rounded-lg flex justify-center items-center gap-1 cursor-pointer"
           >
             <MdHistory size={18} /> History
@@ -203,7 +208,7 @@ export default function DataSinglePage() {
             Delete
           </button>
           <button
-            // onClick={() => setShowReport(true)}
+            onClick={() => setOpenReportIssue(true)}
             className="border w-full border-gray-400 text-gray-700 py-2 px-4 rounded-lg cursor-pointer"
           >
             Report Issue
@@ -214,6 +219,17 @@ export default function DataSinglePage() {
         open={openDelete}
         handleClose={() => setOpenDelete(false)}
         item={data}
+      />
+      <ReportIssue2
+        open={openReportIssue}
+        handleClose={() => setOpenReportIssue(false)}
+        currentMiner={data}
+      />
+      <MinersHistoryModal
+        open={openHistory}
+        handleClose={() => setOpenHistory(false)}
+        history1={data.issueHistory}
+        history2={data.changeHistory}
       />
     </div>
   );
