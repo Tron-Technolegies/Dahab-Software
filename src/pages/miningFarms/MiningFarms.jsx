@@ -176,7 +176,7 @@ export default function MiningFarms() {
                         <FaMicrochip size={28} />
                         <p className="flex flex-col">
                           <span className="font-bold">
-                            {item.miners?.length}
+                            {item.miners?.length + item.temporaryMiners?.length}
                           </span>
                           <span className="text-xs">Total Miners</span>
                         </p>
