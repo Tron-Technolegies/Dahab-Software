@@ -85,7 +85,6 @@ export default function MinerDetailsPopup({ open, handleClose, farm }) {
       setMiners([...ownedMiners, ...temp]);
     }
   }, [data]);
-  console.log(miners);
 
   return (
     <Modal
