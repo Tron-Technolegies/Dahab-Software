@@ -6,12 +6,14 @@ import Loading from "../Loading";
 import useDownloadCSV from "../../hooks/data/useDownloadCSV";
 import AddSelectPopup from "./AddSelectPopup";
 import BulkUploadDataV2 from "./BulkUploadDataV2";
+import { useGetFarmDropdown } from "../../hooks/miningfarm/useMiningFarm";
 
 export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
   const [open, setOpen] = useState(false);
   const [openAddSelector, setOpenAddSelector] = useState(false);
   const [file, setFile] = useState(null);
   const { loading, downloadCSV } = useDownloadCSV();
+  const { isLoading: farmLoading, data: farmData } = useGetFarmDropdown();
 
   return (
     <div>
@@ -67,36 +69,11 @@ export default function DataPageHeader({ search, setSearch, farm, setFarm }) {
             onChange={(e) => setFarm(e.target.value)}
             className={`bg-neutral-300 p-2 rounded-md outline-none`}
           >
-            {[
-              "ALL",
-              "LIWA 1",
-              "LIWA 2",
-              "LIWA 3",
-              "LIWA 4",
-              "BADA ZAYED 1",
-              "MBZ 1",
-              "BAHYA 1",
-              "BAHYA 2",
-              "AL FALAH 1",
-              "SWEIHAN 1",
-              "AL AIN 1",
-              "SHAMKHA 1",
-              "ADLA 1",
-              "SHAKABOUT 1",
-              "BAHYA STORAGE",
-              "MUSSAFAH OFFICE",
-              "LIWA OFFICE",
-              "WARRANTY CENTRE",
-              "REPAIR CENTRE",
-              "MBZ HYDRO 1",
-              "ALAIN HYDRO 1",
-              "ALAIN HYDRO 2",
-              "RIYAD CITY 1",
-              "RIYAD CITY 2",
-              "WAQAN 1",
-              "WAQAN 2",
-            ].map((x, i) => (
-              <option key={i}>{x}</option>
+            <option value={"ALL"}>ALL</option>
+            {farmData?.map((x, i) => (
+              <option key={i} value={x.farm}>
+                {x.farm}
+              </option>
             ))}
           </select>
         </div>
