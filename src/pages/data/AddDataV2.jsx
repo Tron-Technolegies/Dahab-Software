@@ -109,6 +109,19 @@ export default function AddDataV2() {
               </option>
             ))}
         </select>
+        <label className="text-xs font-medium">Temporary Location</label>
+        <select
+          name="temporaryLocation"
+          className="p-2 outline-none bg-neutral-100 rounded-md"
+        >
+          <option>Choose Location</option>
+          {!farmLoading &&
+            farmData.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.farm}
+              </option>
+            ))}
+        </select>
         <label className="text-xs font-medium">Status</label>
         <select
           required

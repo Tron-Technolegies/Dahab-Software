@@ -220,6 +220,15 @@ export default function DataTable({
                   fontWeight: "bold",
                 }}
               >
+                status
+              </TableCell>
+              <TableCell
+                sx={{
+                  width: "11.11%",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
                 Action
               </TableCell>
             </TableRow>
@@ -298,6 +307,18 @@ export default function DataTable({
                   sx={{ width: "11.11%", textAlign: "center" }}
                 >
                   {row.temporaryOwner || row.clientName}
+                </TableCell>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{ width: "11.11%", textAlign: "center" }}
+                >
+                  <p
+                    className={`px-2 py-1 w-fit mx-auto rounded-md ${row.status === "online" ? "bg-green-200 text-green-500" : "bg-red-200 text-red-500"}`}
+                  >
+                    {" "}
+                    {row.status}
+                  </p>
                 </TableCell>
                 <TableCell sx={{ width: "11.11%", textAlign: "center" }}>
                   <div className="flex gap-3 justify-center items-center text-xl text-[#ABABAB]">

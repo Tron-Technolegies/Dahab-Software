@@ -17,6 +17,7 @@ export default function EditDataV2() {
   const [client, setClient] = useState("");
   const [model, setModel] = useState("");
   const [location, setLocation] = useState("");
+  const [tempLocation, setTempLocation] = useState("");
   const { isLoading: clientLoading, data: clientData } = useGetClientDropdown();
   const { isLoading: minerLoading, data: modelsData } =
     useGetAllMinerDropdowns();
@@ -28,6 +29,7 @@ export default function EditDataV2() {
       setClient(data.client);
       setModel(data.modelId);
       setLocation(data.actualLocationId);
+      setTempLocation(data.currentLocationId);
     }
   }, [data]);
   return (
@@ -51,6 +53,8 @@ export default function EditDataV2() {
             const formdata = new FormData(e.target);
             const data = Object.fromEntries(formdata);
             data.id = id;
+            data.location = location;
+            data.temporaryLocation = tempLocation;
             await mutateAsync(data);
           }}
         >
@@ -134,7 +138,22 @@ export default function EditDataV2() {
             onChange={(e) => setLocation(e.target.value)}
             className="p-2 outline-none bg-neutral-100 rounded-md"
           >
-            <option>Choose Location</option>
+            <option value={""}>Choose Location</option>
+            {!farmLoading &&
+              farmData.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.farm}
+                </option>
+              ))}
+          </select>
+          <label className="text-xs font-medium">Temporary Location</label>
+          <select
+            name="temporaryLocation"
+            value={tempLocation}
+            onChange={(e) => setTempLocation(e.target.value)}
+            className="p-2 outline-none bg-neutral-100 rounded-md"
+          >
+            <option value={""}>Choose Location</option>
             {!farmLoading &&
               farmData.map((item) => (
                 <option key={item._id} value={item._id}>
