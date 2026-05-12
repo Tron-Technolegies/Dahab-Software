@@ -35,12 +35,12 @@ export default function AddSelectPopup({ open, handleClose }) {
           Add New Data
         </Typography>
         <div className="my-4 flex flex-col gap-2">
-          <Link
+          {/* <Link
             to={"/data/new"}
             className="px-4 py-2 bg-homeBg hover:bg-homeBgGradient rounded-md text-center"
           >
             Add Via Manual Data
-          </Link>
+          </Link> */}
           <Link
             to={"/data/newV2"}
             className="px-4 py-2 bg-homeBg hover:bg-homeBgGradient rounded-md text-center"
