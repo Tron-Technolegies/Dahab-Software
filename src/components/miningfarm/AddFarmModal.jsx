@@ -71,6 +71,13 @@ export default function AddFarmModal({ open, handleClose }) {
             name="capacity"
             required
           />
+          <label className="text-xs font-medium">Extra Capacity (Watt)</label>
+          <input
+            type="number"
+            className="p-2 bg-neutral-100 shadow-md outline-none"
+            name="additionalCapacity"
+            required
+          />
           <label className="text-xs font-medium">Total Slots</label>
           <input
             type="number"
@@ -103,6 +110,17 @@ export default function AddFarmModal({ open, handleClose }) {
             />
             <p className="text-xs">Hydro</p>
           </div>
+          <label className="text-xs font-medium mt-2">Farm Category</label>
+          <select
+            className="p-2 bg-neutral-100 text-sm shadow-md outline-none"
+            name="category"
+            required
+          >
+            <option value={"hosting-facility"}>Hosting Facility</option>
+            <option value={"storage"}>Storage</option>
+            <option value={"repair-center"}>Repair Center</option>
+            <option value={"warranty-center"}>Warranty Center</option>
+          </select>
           <label className="text-xs font-medium">Farm Status</label>
           <select
             className="p-2 bg-neutral-100 text-sm shadow-md outline-none"

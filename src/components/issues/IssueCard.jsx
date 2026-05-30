@@ -49,7 +49,9 @@ export default function IssueCard({ issue }) {
                   ? "bg-green-600"
                   : issue.status === "Warranty"
                     ? "bg-blue-600"
-                    : "bg-[#F2D56A]"
+                    : issue.status === "Pending"
+                      ? "bg-red-700"
+                      : "bg-[#F2D56A]"
               } text-black font-medium px-3 py-1 rounded-full`}
             >
               {issue.status}

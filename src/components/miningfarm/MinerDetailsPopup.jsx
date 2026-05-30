@@ -82,7 +82,11 @@ export default function MinerDetailsPopup({ open, handleClose, farm }) {
           serialNumber: item.serialNumber,
         };
       });
-      setMiners([...ownedMiners, ...temp]);
+      if (temp) {
+        setMiners([...ownedMiners, ...temp]);
+      } else {
+        setMiners([...ownedMiners]);
+      }
     }
   }, [data]);
 
