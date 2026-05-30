@@ -5,6 +5,7 @@ import PieDiagram from "./PieDiagram";
 export default function AllFarmPreview({ farms }) {
   const [capacity, setCapacity] = useState(0);
   const [current, setCurrent] = useState(0);
+  const [totalFarms, setTotalFarms] = useState(0);
   const [totalMiners, setTotalMiners] = useState(0);
   const [hydro, setHydro] = useState(0);
   const [immersion, setImmersion] = useState(0);
@@ -16,21 +17,36 @@ export default function AllFarmPreview({ farms }) {
 
   useEffect(() => {
     if (farms) {
-      setCapacity(farms.reduce((sum, item) => sum + Number(item.capacity), 0));
-      setCurrent(farms.reduce((sum, item) => sum + item.current, 0));
-      setTotalMiners(farms.reduce((sum, item) => sum + item.miners.length, 0));
-      const AllTypes = farms.flatMap((item) => {
+      const hostingFarms = farms.filter(
+        (item) => item.category === "hosting-facility",
+      );
+      setTotalFarms(hostingFarms?.length);
+      setCapacity(
+        hostingFarms?.reduce((sum, item) => sum + Number(item.capacity), 0),
+      );
+      setCurrent(hostingFarms?.reduce((sum, item) => sum + item.current, 0));
+      setTotalMiners(
+        hostingFarms?.reduce((sum, item) => sum + item.miners.length, 0),
+      );
+      const AllTypes = hostingFarms?.flatMap((item) => {
         return item.farmType.split(",").map((t) => t.trim());
       });
 
       setHydro(AllTypes?.filter((item) => item === "Hydro").length);
       setImmersion(AllTypes?.filter((item) => item === "Immersion").length);
       setAirCooled(AllTypes?.filter((item) => item === "Air Cooled").length);
-      setActive(farms.filter((item) => item.farmStatus === "Active").length);
-      setOffline(farms.filter((item) => item.farmStatus === "Offline").length);
-      setPlanned(farms.filter((item) => item.farmStatus === "Planned").length);
+      setActive(
+        hostingFarms?.filter((item) => item.farmStatus === "Active").length,
+      );
+      setOffline(
+        hostingFarms?.filter((item) => item.farmStatus === "Offline").length,
+      );
+      setPlanned(
+        hostingFarms?.filter((item) => item.farmStatus === "Planned").length,
+      );
       setInBuilding(
-        farms.filter((item) => item.farmStatus === "In-Building").length,
+        hostingFarms?.filter((item) => item.farmStatus === "In-Building")
+          .length,
       );
     }
   }, [farms]);
@@ -39,7 +55,7 @@ export default function AllFarmPreview({ farms }) {
       <div className="grid xl:grid-cols-4 sm:grid-cols-2 place-items-center p-3 shadow-md  gap-2">
         <div className="bg-blue-200 p-5 sm:w-[250px] w-full rounded-md flex flex-col gap-3 items-center">
           <p className="font-semibold text-green-800">Total Farms</p>
-          <p className="font-black text-4xl text-green-500">{farms?.length}</p>
+          <p className="font-black text-4xl text-green-500">{totalFarms}</p>
         </div>
         <div className="bg-blue-200 p-5 sm:w-[250px] w-full rounded-md flex flex-col gap-3 items-center">
           <p className="font-semibold text-blue-800">Total Capacity</p>
@@ -115,22 +131,22 @@ export default function AllFarmPreview({ farms }) {
           content={[
             {
               label: `Offline (${offline})`,
-              value: ((offline / farms?.length) * 100).toFixed(2),
+              value: ((offline / totalFarms) * 100).toFixed(2),
               color: "oklch(70.4% 0.191 22.216)",
             },
             {
               label: `Active (${active})`,
-              value: ((active / farms?.length) * 100).toFixed(2),
+              value: ((active / totalFarms) * 100).toFixed(2),
               color: "#05df72",
             },
             {
               label: `Planned (${planned})`,
-              value: ((planned / farms?.length) * 100).toFixed(2),
+              value: ((planned / totalFarms) * 100).toFixed(2),
               color: "oklch(70.7% 0.165 254.624)",
             },
             {
               label: `In-Building (${inBuilding})`,
-              value: ((inBuilding / farms?.length) * 100).toFixed(2),
+              value: ((inBuilding / totalFarms) * 100).toFixed(2),
               color: "oklch(75% 0.183 55.934)",
             },
           ]}
