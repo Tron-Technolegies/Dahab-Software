@@ -73,7 +73,11 @@ export const useAddDataV2Mutation = () => {
     },
     onError: (err) => {
       toast.error(
-        err?.response?.data?.msg || err?.error || "something went wrong",
+        err?.response?.data?.msg ||
+          err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          err?.error ||
+          "something went wrong",
       );
     },
   });
@@ -192,7 +196,11 @@ export const useEditDataV2 = () => {
     },
     onError: (err) => {
       toast.error(
-        err?.response?.data?.msg || err?.error || "something went wrong",
+        err?.response?.data?.msg ||
+          err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          err?.error ||
+          "something went wrong",
       );
     },
   });

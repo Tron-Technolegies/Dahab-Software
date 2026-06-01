@@ -109,7 +109,7 @@ export default function EditDataV2() {
           />
           <label className="text-xs font-medium">Mac Address</label>
           <input
-            required
+            // required
             name="macAddress"
             defaultValue={data.macAddress}
             type="text"
@@ -118,7 +118,7 @@ export default function EditDataV2() {
           <label className="text-xs font-medium">Pool Address</label>
           <input
             type="text"
-            required
+            // required
             defaultValue={data.pool}
             name="poolAddress"
             className="p-2 outline-none bg-neutral-100 rounded-md"
