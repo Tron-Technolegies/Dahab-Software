@@ -77,7 +77,7 @@ export default function AddDataV2() {
         />
         <label className="text-xs font-medium">Mac Address</label>
         <input
-          required
+          // required
           name="macAddress"
           type="text"
           className="p-2 outline-none bg-neutral-100 rounded-md"
@@ -85,7 +85,7 @@ export default function AddDataV2() {
         <label className="text-xs font-medium">Pool Address</label>
         <input
           type="text"
-          required
+          // required
           name="poolAddress"
           className="p-2 outline-none bg-neutral-100 rounded-md"
         />
