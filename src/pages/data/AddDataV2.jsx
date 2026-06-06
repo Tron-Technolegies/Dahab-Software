@@ -114,7 +114,7 @@ export default function AddDataV2() {
           name="temporaryLocation"
           className="p-2 outline-none bg-neutral-100 rounded-md"
         >
-          <option>Choose Location</option>
+          <option value={""}>Choose Location</option>
           {!farmLoading &&
             farmData.map((item) => (
               <option key={item._id} value={item._id}>
