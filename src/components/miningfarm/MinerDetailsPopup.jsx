@@ -72,21 +72,39 @@ export default function MinerDetailsPopup({ open, handleClose, farm }) {
   //       : [...prev, id.toString()],
   //   );
   // };
+  // useEffect(() => {
+  //   if (data) {
+  //     const ownedMiners = data.miners;
+  //     const temp = data.temporaryMiners?.map((item) => {
+  //       return {
+  //         ...item.miner,
+  //         isTemporary: true,
+  //         serialNumber: item.serialNumber,
+  //       };
+  //     });
+  //     if (temp) {
+  //       setMiners([...ownedMiners, ...temp]);
+  //     } else {
+  //       setMiners([...ownedMiners]);
+  //     }
+  //   }
+  // }, [data]);
   useEffect(() => {
     if (data) {
-      const ownedMiners = data.miners;
-      const temp = data.temporaryMiners?.map((item) => {
-        return {
+      const ownedMiners = data.miners || [];
+
+      const temp =
+        data.temporaryMiners?.map((item) => ({
           ...item.miner,
           isTemporary: true,
           serialNumber: item.serialNumber,
-        };
-      });
-      if (temp) {
-        setMiners([...ownedMiners, ...temp]);
-      } else {
-        setMiners([...ownedMiners]);
-      }
+        })) || [];
+
+      const sortedMiners = [...ownedMiners, ...temp].sort(
+        (a, b) => Number(a.power) - Number(b.power),
+      );
+
+      setMiners(sortedMiners);
     }
   }, [data]);
 
