@@ -215,7 +215,7 @@ export default function MinerDetailsPopup({ open, handleClose, farm }) {
                         scope="row"
                         sx={{ textAlign: "center" }}
                       >
-                        {item.workerId}
+                        {item.workerId} {item.isTemporary ? " (Temp) " : ""}
                       </TableCell>
                       <TableCell
                         component="th"
